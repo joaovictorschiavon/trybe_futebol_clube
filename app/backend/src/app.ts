@@ -11,6 +11,7 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.initRoutes();
   }
 
   private config():void {
@@ -23,8 +24,13 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+  }
+
+  private initRoutes(): void {
     this.app.use(teamsRoutes);
   }
+
+  // this.app.use(teamsRoutes);
 
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
