@@ -12,7 +12,7 @@ module.exports = {
       homeTeamId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: home_team_id,
+        field: 'home_team_id',
         references: {
           model: 'teams',
           key: 'id',
@@ -21,12 +21,12 @@ module.exports = {
       homeTeamGoals: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: home_team_goals,
+        field: 'home_team_goals',
       },
       awayTeamId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: away_team_id,
+        field: 'away_team_id',
         references: {
           model: 'teams',
           key: 'id',
@@ -35,12 +35,12 @@ module.exports = {
       awayTeamGoals: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: away_team_goals,
+        field: 'away_team_goals',
       },
       inProgress: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
-        field: in_progress,
+        field: 'in_progress',
       }
     })
   },
