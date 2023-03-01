@@ -17,6 +17,18 @@ class UsersController {
       next(error);
     }
   }
+
+  async getRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email } = req.body;
+
+      const role = await this._usersService.getRole(email);
+
+      return res.status(200).json({ role });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UsersController;

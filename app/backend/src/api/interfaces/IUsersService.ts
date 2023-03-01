@@ -3,4 +3,5 @@ import IUsers from './IUsers';
 
 export default interface IUsersService {
   checkLogin(arg: IUsers): Promise<string>;
+  getRole(email: string): Promise<string>;
 }

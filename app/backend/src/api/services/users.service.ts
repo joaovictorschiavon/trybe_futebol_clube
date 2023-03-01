@@ -12,9 +12,9 @@ import ILogin from '../interfaces/ILogin';
 export default class UsersService implements IUsersService {
   protected model: ModelStatic<UsersModel> = UsersModel;
 
-  private _secret = process.env.JWT_SECRET as string;
+  // private _secret = process.env.JWT_SECRET as string;
 
-  private _jwtService: JWTService = new JWTService(this._secret);
+  private _jwtService: JWTService = new JWTService();
 
   async checkLogin(userLogin: ILogin): Promise<string> {
     const user = await this.model.findOne({ where: { email: userLogin.email } });
@@ -30,5 +30,13 @@ export default class UsersService implements IUsersService {
     const token = this._jwtService.generateToken({ email, id, role });
 
     return token;
+  }
+
+  async getRole(email: string): Promise<string> {
+    const user = await this.model.findOne({ where: { email } });
+
+    if (!user) throw new Error();
+
+    return user.role;
   }
 }

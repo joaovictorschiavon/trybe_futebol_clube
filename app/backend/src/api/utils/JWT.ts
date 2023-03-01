@@ -1,10 +1,12 @@
 import * as jwt from 'jsonwebtoken';
+import InvalidFieldsError from '../erros/invalidFields';
 
 class JWTService {
-  private _secret: string;
-  constructor(secret: string) {
-    this._secret = secret;
-  }
+  private _secret = process.env.JWT_SECRET || 'sparesecret';
+
+  // constructor(secret: string) {
+  //   this._secret = secret;
+  // }
 
   generateToken(payload: jwt.JwtPayload): string {
     const config: jwt.SignOptions = {
@@ -18,12 +20,14 @@ class JWTService {
   }
 
   verifyToken(token: string): jwt.JwtPayload {
+    if (!token) throw new InvalidFieldsError('Token not found');
+
     try {
       const payload = jwt.verify(token, this._secret);
 
       return payload as jwt.JwtPayload;
     } catch (error) {
-      throw new jwt.JsonWebTokenError('Token not valid');
+      throw new InvalidFieldsError('Token must be a valid token');
     }
   }
 }
