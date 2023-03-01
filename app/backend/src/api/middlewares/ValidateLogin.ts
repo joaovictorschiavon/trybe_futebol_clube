@@ -8,6 +8,11 @@ export default class ValidateLogin {
     if (!email || !password) {
       throw new BadRequest('All fields must be filled');
     }
+
+    if (!/\S+@\S+.\S+/.test(email) || password.length < 6) {
+      throw new BadRequest('All fields must be filled');
+    }
+
     next();
   }
 }

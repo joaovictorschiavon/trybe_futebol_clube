@@ -1,13 +1,13 @@
 import { ModelStatic } from 'sequelize';
 import * as bcryptjs from 'bcryptjs';
 import UsersModel from '../../database/models/user.model';
-import IUsers from '../interfaces/IUsers';
+// import IUsers from '../interfaces/IUsers';
 import IUsersService from '../interfaces/IUsersService';
-import IToken from '../interfaces/IToken';
+// import IToken from '../interfaces/IToken';
 import JWTService from '../utils/JWT';
-import 'dotenv/config';
-
+// import 'dotenv/config';
 import InvalidFields from '../erros/invalidFields';
+import ILogin from '../interfaces/ILogin';
 
 export default class UsersService implements IUsersService {
   protected model: ModelStatic<UsersModel> = UsersModel;
@@ -16,7 +16,7 @@ export default class UsersService implements IUsersService {
 
   private _jwtService: JWTService = new JWTService(this._secret);
 
-  async checkLogin(userLogin: IUsers): Promise<IToken> {
+  async checkLogin(userLogin: ILogin): Promise<string> {
     const user = await this.model.findOne({ where: { email: userLogin.email } });
 
     if (!user) throw new InvalidFields('Invalid email or password');
@@ -25,10 +25,10 @@ export default class UsersService implements IUsersService {
 
     if (!isPass) throw new InvalidFields('Invalid email or password');
 
-    const payload = userLogin.email as string;
+    const { email, id, role/* , username */ } = user;
 
-    const token = this._jwtService.generateToken(payload);
+    const token = this._jwtService.generateToken({ email, id, role });
 
-    return { token };
+    return token;
   }
 }

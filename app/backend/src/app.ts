@@ -11,10 +11,11 @@ class App {
 
     this.config();
 
+    // this.initRoutes();
+    // this.initMiddlewares();
+
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
-    this.initRoutes();
-    this.initMiddlewares();
   }
 
   private config():void {
@@ -27,16 +28,20 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-  }
 
-  private initRoutes(): void {
     this.app.use(teamsRouter);
     this.app.use(usersRouter);
-  }
-
-  private initMiddlewares() {
     this.app.use(ErrorHandler.handle);
   }
+
+  // private initRoutes(): void {
+  //   this.app.use(teamsRouter);
+  //   this.app.use(usersRouter);
+  // }
+
+  // private initMiddlewares() {
+  //   this.app.use(ErrorHandler.handle);
+  // }
 
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));

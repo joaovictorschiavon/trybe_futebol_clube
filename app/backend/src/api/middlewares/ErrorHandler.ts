@@ -8,6 +8,7 @@ export default class ErrorHandler {
     _next: NextFunction,
   ): Response {
     if (err instanceof Error && err.stack) {
+      console.log(err.stack);
       return res.status(Number(err.stack)).json({ message: err.message });
     }
     return res.status(500).json({ message: 'Erro não identificado.' });

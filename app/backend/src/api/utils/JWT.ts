@@ -6,7 +6,7 @@ class JWTService {
     this._secret = secret;
   }
 
-  generateToken(payload: string): string {
+  generateToken(payload: jwt.JwtPayload): string {
     const config: jwt.SignOptions = {
       expiresIn: '2d',
       algorithm: 'HS256',
@@ -17,10 +17,14 @@ class JWTService {
     return token;
   }
 
-  verifyToken(token: string): string {
-    const payload = jwt.verify(token, this._secret) as string;
+  verifyToken(token: string): jwt.JwtPayload {
+    try {
+      const payload = jwt.verify(token, this._secret);
 
-    return payload;
+      return payload as jwt.JwtPayload;
+    } catch (error) {
+      throw new jwt.JsonWebTokenError('Token not valid');
+    }
   }
 }
 

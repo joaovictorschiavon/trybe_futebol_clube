@@ -19,4 +19,6 @@ COPY . .
 
 # Configurar os comandos para iniciar a aplicação de acordo com as boas práticas
 # Dica: Leia a seção Docker e Docker-compose no README para mais informações
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "npm", "run" ]
+
+CMD [ "start" ]

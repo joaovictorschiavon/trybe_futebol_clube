@@ -10,6 +10,7 @@ class UsersController {
 
   async checkLogin(req: Request, res: Response, next: NextFunction) {
     try {
+      // const user = await this.model.
       const token = await this._usersService.checkLogin(req.body);
       return res.status(200).json({ token });
     } catch (error) {
