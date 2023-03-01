@@ -1,5 +1,7 @@
 import * as express from 'express';
-import teamsRoutes from './api/routes/teamsRoutes';
+import teamsRouter from './api/routes/teamsRoutes';
+import usersRouter from './api/routes/userRoutes';
+import ErrorHandler from './api/middlewares/ErrorHandler';
 
 class App {
   public app: express.Express;
@@ -12,6 +14,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.initRoutes();
+    this.initMiddlewares();
   }
 
   private config():void {
@@ -27,10 +30,13 @@ class App {
   }
 
   private initRoutes(): void {
-    this.app.use(teamsRoutes);
+    this.app.use(teamsRouter);
+    this.app.use(usersRouter);
   }
 
-  // this.app.use(teamsRoutes);
+  private initMiddlewares() {
+    this.app.use(ErrorHandler.handle);
+  }
 
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
