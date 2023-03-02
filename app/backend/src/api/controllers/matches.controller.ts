@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import IMatchesService from '../interfaces/IMatchesService';
+import NotFoundError from '../erros/notFound';
 
 class MatchesController {
   private _matchesService: IMatchesService;
@@ -19,6 +20,20 @@ class MatchesController {
     }
 
     return res.status(200).json(matchesRecovered);
+  }
+
+  async finishMatch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const match = await this._matchesService.finishMatch(Number(id));
+
+      if (!match) throw new NotFoundError('Match not found');
+
+      return res.status(200).json({ message: 'Finished' });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
