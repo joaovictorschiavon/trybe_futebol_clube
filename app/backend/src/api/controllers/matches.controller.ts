@@ -11,11 +11,11 @@ class MatchesController {
   async getAll(req: Request, res: Response) {
     const matchesRecovered = await this._matchesService.getAll();
 
-    const { inProgress } = req.body;
+    const { inProgress } = req.query;
 
     if (inProgress) {
       return res.status(200).json(matchesRecovered
-        .filter((item) => item.inProgress === (req.query.inProgress === 'true')));
+        .filter((item) => item.inProgress === (inProgress === 'true')));
     }
 
     return res.status(200).json(matchesRecovered);
