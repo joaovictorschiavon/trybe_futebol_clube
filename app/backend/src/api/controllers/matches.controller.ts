@@ -26,11 +26,26 @@ class MatchesController {
     try {
       const { id } = req.params;
 
-      const match = await this._matchesService.finishMatch(Number(id));
+      const result = await this._matchesService.finishMatch(Number(id));
 
-      if (!match) throw new NotFoundError('Match not found');
+      if (!result) throw new NotFoundError('Match not found');
 
       return res.status(200).json({ message: 'Finished' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+
+      const result = await this._matchesService.update(Number(id), homeTeamGoals, awayTeamGoals);
+
+      if (!result) throw new NotFoundError('Match not found');
+
+      return res.status(200).json({ message: 'Sucess' });
     } catch (error) {
       next(error);
     }

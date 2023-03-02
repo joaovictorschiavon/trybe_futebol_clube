@@ -11,11 +11,18 @@ matchesRouter.get(
   '/matches',
   (req: Request, res: Response) => matchesController.getAll(req, res),
 );
+
 matchesRouter.patch(
   '/matches/:id/finish',
   Auth.checkToken,
   (req: Request, res: Response, next: NextFunction) => matchesController
     .finishMatch(req, res, next),
+);
+
+matchesRouter.patch(
+  '/matches/:id',
+  Auth.checkToken,
+  (req: Request, res: Response, next: NextFunction) => matchesController.update(req, res, next),
 );
 
 export default matchesRouter;
