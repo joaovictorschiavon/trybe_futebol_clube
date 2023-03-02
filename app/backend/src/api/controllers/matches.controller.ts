@@ -41,11 +41,26 @@ class MatchesController {
       const { id } = req.params;
       const { homeTeamGoals, awayTeamGoals } = req.body;
 
-      const result = await this._matchesService.update(Number(id), homeTeamGoals, awayTeamGoals);
+      console.log(req.body);
 
-      if (!result) throw new NotFoundError('Match not found');
+      await this._matchesService.update(Number(id), homeTeamGoals, awayTeamGoals);
+
+      // if (!result) throw new NotFoundError('Match not found');
 
       return res.status(200).json({ message: 'Sucess' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { homeTeamId, homeTeamGoals, awayTeamGoals, awayTeamId } = req.body;
+
+      const match = await this._matchesService
+        .register(homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals);
+
+      return res.status(201).json(match);
     } catch (error) {
       next(error);
     }

@@ -10,11 +10,11 @@ export default class Auth {
 
     if (!authorization) throw new InvalidFieldsError('Token not found');
 
-    const token = JWT.verifyToken(authorization);
+    const payload = JWT.verifyToken(authorization);
 
-    if (token instanceof Error) throw new InvalidFieldsError('Invalid token');
+    if (payload instanceof Error) throw new InvalidFieldsError('Invalid token');
 
-    req.body = token;
+    req.body = { userData: payload, ...req.body };
 
     next();
   }

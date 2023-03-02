@@ -20,7 +20,7 @@ class UsersController {
 
   async getRole(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email } = req.body;
+      const { email } = req.body.userData;
 
       const role = await this._usersService.getRole(email);
 

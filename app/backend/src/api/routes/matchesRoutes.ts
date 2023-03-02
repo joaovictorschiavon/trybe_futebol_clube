@@ -25,4 +25,10 @@ matchesRouter.patch(
   (req: Request, res: Response, next: NextFunction) => matchesController.update(req, res, next),
 );
 
+matchesRouter.post(
+  '/matches',
+  Auth.checkToken,
+  (req: Request, res: Response, next) => matchesController.register(req, res, next),
+);
+
 export default matchesRouter;
