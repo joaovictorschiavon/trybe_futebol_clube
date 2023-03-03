@@ -3,12 +3,14 @@ import TeamsController from '../controllers/teams.controller';
 import TeamsService from '../services/teams.service';
 import MatchesService from '../services/matches.service';
 
-const teamsRouter = Router();
+const leaderboardRouter = Router();
 const teamsService = new TeamsService();
 const matchesService = new MatchesService();
 const teamsController = new TeamsController(teamsService, matchesService);
 
-teamsRouter.get('/teams', (req: Request, res: Response) => teamsController.getAll(req, res));
-teamsRouter.get('/teams/:id', (req: Request, res: Response) => teamsController.getById(req, res));
+leaderboardRouter.get(
+  '/leaderboard/home',
+  (req: Request, res: Response) => teamsController.getBoard(req, res),
+);
 
-export default teamsRouter;
+export default leaderboardRouter;

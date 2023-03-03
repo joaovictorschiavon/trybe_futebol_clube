@@ -41,8 +41,6 @@ class MatchesController {
       const { id } = req.params;
       const { homeTeamGoals, awayTeamGoals } = req.body;
 
-      console.log(req.body);
-
       await this._matchesService.update(Number(id), homeTeamGoals, awayTeamGoals);
 
       // if (!result) throw new NotFoundError('Match not found');

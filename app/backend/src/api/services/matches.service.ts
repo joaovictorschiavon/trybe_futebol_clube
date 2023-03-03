@@ -27,7 +27,7 @@ export default class MatchesService implements IMatchesService {
 
   async update(id:number, homeTeamGoals: number, awayTeamGoals: number): Promise<number> {
     const match = await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
-    console.log(match, id, homeTeamGoals, awayTeamGoals);
+
     return match[0];
   }
 
@@ -44,15 +44,14 @@ export default class MatchesService implements IMatchesService {
       throw new NotFoundError('There is no team with such id!');
     }
 
-    if (homeTeamId === awayTeamId) {
-      throw new UnprocessableEntityError('It is not possible to '
-      + 'create a match with two equal teams');
+    if (homeTeam.id === awayTeam.id) {
+      throw new UnprocessableEntityError(
+        'It is not possible to create a match with two equal teams',
+      );
     }
 
-    const match = await this.model.create({
+    return this.model.create({
       homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress: true,
     });
-
-    return match;
   }
 }
