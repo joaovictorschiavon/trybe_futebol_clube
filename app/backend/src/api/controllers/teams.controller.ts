@@ -30,7 +30,7 @@ class TeamsController {
   }
 
   public static option(o: string) {
-    if (o) {
+    if (o !== '') {
       if (o === 'homeTeamId') {
         return 'homeTeamId';
       }
@@ -88,21 +88,21 @@ class TeamsController {
   }
 
   public static goalsOwn(matches: IMatches[], id: number | undefined, o: string) {
-    let goals = 0;
+    let oGoals = 0;
     const filteredMatches = TeamsController.filterMatches(o, matches, id);
     filteredMatches.forEach((e) => {
-      if (id === e.homeTeamId) { goals += e.awayTeamGoals; } else { goals += e.homeTeamGoals; }
+      if (id === e.homeTeamId) { oGoals += e.awayTeamGoals; } else { oGoals += e.homeTeamGoals; }
     });
-    return goals;
+    return oGoals;
   }
 
   public static goalsFavor(matches: IMatches[], id: number | undefined, o: string) {
-    let goals = 0;
+    let fGoals = 0;
     const filteredMatches = TeamsController.filterMatches(o, matches, id);
     filteredMatches.forEach((e) => {
-      if (id === e.homeTeamId) { goals += e.homeTeamGoals; } else { goals += e.awayTeamGoals; }
+      if (id === e.homeTeamId) { fGoals += e.homeTeamGoals; } else { fGoals += e.awayTeamGoals; }
     });
-    return goals;
+    return fGoals;
   }
 
   public static decisionOfMatches(matches: IMatches[]) {
@@ -229,7 +229,7 @@ class TeamsController {
     }));
 
     const sortedResult = TeamsController.orderResult(unsortedResult);
-
+    console.log(sortedResult);
     return res.status(200).json(sortedResult);
   }
 }
