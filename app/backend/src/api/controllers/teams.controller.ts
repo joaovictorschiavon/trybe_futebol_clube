@@ -41,11 +41,13 @@ class TeamsController {
 
   public static filterMatches(o: string, matches: IMatches[], id: number | undefined) {
     const option = TeamsController.option(o);
-    let filteredMatches;
+    console.log(option);
     if (option !== 'all') {
-      filteredMatches = o ? matches.filter((e) => e[option] === id) : matches;
-    } else { filteredMatches = matches; }
-    return filteredMatches;
+      console.log('wrong');
+      return matches.filter((e) => e[option] === id);
+    }
+    console.log('here');
+    return matches;
   }
 
   public static efficiency(points: number, games: number) {
@@ -87,22 +89,49 @@ class TeamsController {
     return games;
   }
 
-  public static goalsOwn(matches: IMatches[], id: number | undefined, o: string) {
+  public static goalsOwn(matches: IMatches[], id: number | undefined) {
     let oGoals = 0;
-    const filteredMatches = TeamsController.filterMatches(o, matches, id);
-    filteredMatches.forEach((e) => {
-      if (id === e.homeTeamId) { oGoals += e.awayTeamGoals; } else { oGoals += e.homeTeamGoals; }
+    matches.forEach((e) => {
+      if (id === e.homeTeamId) {
+        oGoals += e.awayTeamGoals;
+      } else if (id === e.awayTeamId) {
+        oGoals += e.homeTeamGoals;
+      }
     });
     return oGoals;
   }
 
-  public static goalsFavor(matches: IMatches[], id: number | undefined, o: string) {
+  public static goalsFavor(matches: IMatches[], id: number | undefined) {
     let fGoals = 0;
-    const filteredMatches = TeamsController.filterMatches(o, matches, id);
-    filteredMatches.forEach((e) => {
-      if (id === e.homeTeamId) { fGoals += e.homeTeamGoals; } else { fGoals += e.awayTeamGoals; }
+    console.log(fGoals);
+    matches.forEach((e, index) => {
+      if (id === e.homeTeamId) {
+        fGoals += e.homeTeamGoals;
+        console.log('console.log', index, fGoals);
+      } else if (id === e.awayTeamId) {
+        fGoals += e.awayTeamGoals;
+        console.log('console.log', index, fGoals);
+      }
     });
+    console.log(fGoals);
     return fGoals;
+  }
+
+  public static getGoals(teams: ITeams[], matches: IMatches[], o: string) {
+    const result = teams.map((team) => {
+      const filteredMatches = TeamsController.filterMatches(o, matches, team.id);
+      const goalsF = TeamsController.goalsFavor(filteredMatches, team.id);
+      const goalsO = TeamsController.goalsOwn(filteredMatches, team.id);
+      const goalsB = TeamsController.goalsBalance(goalsF, goalsO);
+
+      return {
+        goalsFavor: goalsF,
+        goalsOwn: goalsO,
+        goalsBalance: goalsB,
+      };
+    });
+
+    return result;
   }
 
   public static decisionOfMatches(matches: IMatches[]) {
@@ -116,23 +145,6 @@ class TeamsController {
       return { decision: 0, winner: match.awayTeamId, loser: match.homeTeamId };
     });
     return matchesResults;
-  }
-
-  public static getGoals(teams: ITeams[], matches: IMatches[], o: string) {
-    const result = teams.map((team) => {
-      const filteredMatches = TeamsController.filterMatches(o, matches, team.id);
-      const goalsF = TeamsController.goalsFavor(filteredMatches, team.id, o);
-      const goalsO = TeamsController.goalsOwn(filteredMatches, team.id, o);
-      const goalsB = TeamsController.goalsBalance(goalsF, goalsO);
-
-      return {
-        goalsFavor: goalsF,
-        goalsOwn: goalsO,
-        goalsBalance: goalsB,
-      };
-    });
-
-    return result;
   }
 
   public static calculateScore(teams: ITeams[], matches: IMatches[], o: string) {
@@ -229,7 +241,7 @@ class TeamsController {
     }));
 
     const sortedResult = TeamsController.orderResult(unsortedResult);
-    console.log(sortedResult);
+
     return res.status(200).json(sortedResult);
   }
 }
