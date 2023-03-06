@@ -41,12 +41,9 @@ class TeamsController {
 
   public static filterMatches(o: string, matches: IMatches[], id: number | undefined) {
     const option = TeamsController.option(o);
-    console.log(option);
     if (option !== 'all') {
-      console.log('wrong');
       return matches.filter((e) => e[option] === id);
     }
-    console.log('here');
     return matches;
   }
 
@@ -103,17 +100,13 @@ class TeamsController {
 
   public static goalsFavor(matches: IMatches[], id: number | undefined) {
     let fGoals = 0;
-    console.log(fGoals);
-    matches.forEach((e, index) => {
+    matches.forEach((e) => {
       if (id === e.homeTeamId) {
         fGoals += e.homeTeamGoals;
-        console.log('console.log', index, fGoals);
       } else if (id === e.awayTeamId) {
         fGoals += e.awayTeamGoals;
-        console.log('console.log', index, fGoals);
       }
     });
-    console.log(fGoals);
     return fGoals;
   }
 

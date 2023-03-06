@@ -22,12 +22,14 @@ describe('Teste de Teams', () => {
   });
 
   describe('Function getAll', function () {
-    test('should return all the teams and status code 200', async function () {
-      // arrange 
+    it('should return all the teams and status code 200', async function () {
+      // arrange
+      
+      sinon.stub(Teams, 'findAll').resolves(teams as Teams[]);
 
       // act
 
-      const result = await chai.request(app).get('/teams').send(teams);
+      const result = await chai.request(app).get('/teams');
 
     
       // assert
@@ -38,12 +40,13 @@ describe('Teste de Teams', () => {
   })
 
   describe('Function getById', function () {
-    test('should return the team 2 and status code 200', async function () {
+    it('should return the team 2 and status code 200', async function () {
       // arrange 
+      sinon.stub(Teams, 'findByPk').resolves(teams[1] as Teams)
 
       // act
 
-      const result = await chai.request(app).get('/teams/:2').send(teams);
+      const result = await chai.request(app).get('/teams/2');
 
     
       // assert
