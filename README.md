@@ -28,10 +28,10 @@ Este projeto teve a utilização das seguintes tecnologis em seu desenvolvimento
 #Como usar
 
 Com Docker:  
-`npm run install:apps na raiz dos projetos para instalação das dependências  
-npm run compose:up na raiz do projeto rodar os containêrs docker  
-npm run build na raiz da pasta do back-end  
-`
+`npm run install:apps na raiz dos projetos para instalação das dependências`    
+`npm run compose:up na raiz do projeto rodar os containêrs docker`  
+`npm run build na raiz da pasta do back-end`  
+
 
 ***
 Criado por ___Trybe___ e desenvolvido por ___João Victor Schiavon___
