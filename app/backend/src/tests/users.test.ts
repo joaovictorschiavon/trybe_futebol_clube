@@ -10,7 +10,7 @@ import { Response } from 'superagent';
 import Users from '../database/models/user.model';
 import UsersService from '../api/services/users.service';
 import { teams } from './mocks/teams.mocks';
-import { bodyLogin } from './mocks/users.mocks'
+import { bodyLogin, invalidLogin, invalidPassword, missingEmail, missingPassword } from './mocks/users.mocks'
 import * as jwt from 'jsonwebtoken';
 
 // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlkIjoxLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgxNDY4NzYsImV4cCI6MTY3ODMxOTY3Nn0.Qj3MrG3D-PdF8JNcPOFcg3qT4khBR9oamRuCchJ33EU'
@@ -37,6 +37,42 @@ describe('Teste de Users', () => {
       // assert
 
       expect(result.status).to.be.equal(200);
+    })
+    it('should return error code status 401 because invalid email', async function () {
+      // arrange 
+
+      // act
+
+      const result = await chai.request(app).post('/login').send(invalidLogin);
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(401);
+    })
+    it('should return error code status 400 because missing email', async function () {
+      // arrange 
+
+      // act
+
+      const result = await chai.request(app).post('/login').send(missingEmail);
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(400);
+    })
+    it('should return error code status 400 because missing password', async function () {
+      // arrange 
+
+      // act
+
+      const result = await chai.request(app).post('/login').send(missingPassword);
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(400);
     })
   })
 

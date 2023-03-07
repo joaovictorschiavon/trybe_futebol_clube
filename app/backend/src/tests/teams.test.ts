@@ -10,6 +10,8 @@ import { Response } from 'superagent';
 import Teams from '../database/models/team.model';
 import TeamsService from '../api/services/teams.service';
 import { teams } from './mocks/teams.mocks';
+import Matches from '../database/models/match.model';
+import { matches } from './mocks/matches.mocks';
 
 chai.use(chaiHttp);
 
@@ -56,6 +58,57 @@ describe('Teste de Teams', () => {
         "id": 2,
         "teamName": "Bahia"
       })
+    })
+  })
+  describe('Function getHomeBoard', function () {
+    it('should return the sorted list of matches by home and status code 200', async function () {
+      // arrange 
+      sinon.stub(Teams, 'findAll').resolves(teams as Teams[]);
+      sinon.stub(Matches, 'findAll').resolves(matches as Matches[])
+
+      // act
+
+      const result = await chai.request(app).get('/leaderboard/home');
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(200);
+      
+    })
+  })
+  describe('Function getAwayBoard', function () {
+    it('should return the sorted list of matches by away and status code 200', async function () {
+      // arrange 
+      sinon.stub(Teams, 'findAll').resolves(teams as Teams[]);
+      sinon.stub(Matches, 'findAll').resolves(matches as Matches[])
+
+      // act
+
+      const result = await chai.request(app).get('/leaderboard/away');
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(200);
+      
+    })
+  })
+  describe('Function getBoard', function () {
+    it('should return the sorted list of matches and status code 200', async function () {
+      // arrange 
+      sinon.stub(Teams, 'findAll').resolves(teams as Teams[]);
+      sinon.stub(Matches, 'findAll').resolves(matches as Matches[])
+
+      // act
+
+      const result = await chai.request(app).get('/leaderboard');
+
+    
+      // assert
+
+      expect(result.status).to.be.equal(200);
+     
     })
   })
 });
