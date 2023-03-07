@@ -16,6 +16,6 @@ const invalidLogin = {
   password: 12345
 }
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjU0NTI3MTg5fQ.XS_9AA82iNoiVaASi0NtJpqOQ_gHSHhxrpIdigiT-fc';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlkIjoxLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgxNDY4NzYsImV4cCI6MTY3ODMxOTY3Nn0.Qj3MrG3D-PdF8JNcPOFcg3qT4khBR9oamRuCchJ33EU';
 
 export { bodyLogin, missingEmail, missingPassword, invalidLogin, token };

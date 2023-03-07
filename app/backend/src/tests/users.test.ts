@@ -10,8 +10,10 @@ import { Response } from 'superagent';
 import Users from '../database/models/user.model';
 import UsersService from '../api/services/users.service';
 import { teams } from './mocks/teams.mocks';
-import { bodyLogin, token } from './mocks/users.mocks'
+import { bodyLogin } from './mocks/users.mocks'
 import * as jwt from 'jsonwebtoken';
+
+// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlkIjoxLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgxNDY4NzYsImV4cCI6MTY3ODMxOTY3Nn0.Qj3MrG3D-PdF8JNcPOFcg3qT4khBR9oamRuCchJ33EU'
 
 chai.use(chaiHttp);
 
@@ -42,21 +44,20 @@ describe('Teste de Users', () => {
     it('should return the role of the user and status code 200', async function () {
       // arrange 
 
-      sinon.stub(jwt, 'verify').callsFake(() => {
-        return Promise.resolve({ sucess: 'Token is valid' });
-      })
+      const resultLogin = await chai.request(app).post('/login').send(bodyLogin);
+      expect(resultLogin.body.token).not.to.be.empty;
+
+      const passT: string = resultLogin.body.token;
 
       // act
 
-      const result = await chai.request(app).get('/login/role').set('authorization', 'token');
+      const result = await chai.request(app).get('/login/role').set('authorization', passT);
 
     
       // assert
 
       expect(result.status).to.be.equal(200);
-      // expect(result.body).to.be.deep.equal({
-      //   role: 'admin'
-      // })
+
     })
   })
 });
