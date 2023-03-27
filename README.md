@@ -10,20 +10,20 @@ O aplicativo TFC é uma tabela interativa de jogos de futebol com partidas e tab
 #Tecnologias
 ***
 
-Este projeto teve a utilização das seguintes tecnologis em seu desenvolvimento:
--Docker para a conteinerização da aplicação.
--ESLint para a padronização e correção do código.
--Git para versionamento.
--VS Code para edição do código.
--SOLID para arquitetura e organização do código realizado em paradigma POO.
--Node.js para execução de testes e instalação de packages de bibliotecas.
--Typescript para tipagem da linguagem.
--Node.js no desenvolvimento.
--JWT para geração e verificação de token.
--Arquitetura MSC para organização do código
--Sequelize como ferramenta ORM
--MySql para gerenciamento de dados relacional
--Express para construção de servidor.
+Este projeto teve a utilização das seguintes tecnologis em seu desenvolvimento:  
+-Docker para a conteinerização da aplicação.  
+-ESLint para a padronização e correção do código.  
+-Git para versionamento.  
+-VS Code para edição do código.  
+-SOLID para arquitetura e organização do código realizado em paradigma POO.  
+-Node.js para execução de testes e instalação de packages de bibliotecas.  
+-Typescript para tipagem da linguagem.  
+-Node.js no desenvolvimento.  
+-JWT para geração e verificação de token.  
+-Arquitetura MSC para organização do código  
+-Sequelize como ferramenta ORM  
+-MySql para gerenciamento de dados relacional  
+-Express para construção de servidor.  
 
 #Como usar
 
