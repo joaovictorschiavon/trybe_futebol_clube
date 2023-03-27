@@ -1,7 +1,7 @@
 # Trybe Futebol Clube ⚽⚽⚽
 ***
 
-O TFC é um projeto de uma API desenvolvida através TDD comsumindo um banco de dados.  
+O TFC é um projeto de uma API desenvolvida através TDD consumindo um banco de dados.  
 
 Foi desenvolvido um back-end dockerizado utilizando modelagem de dados através do Sequelize, respeitando regras de negócio providas no projeto e a API consume um front-end já provido nesse projeto. O back-end também tem um sistema de login com jwt que disponibiliza um token.
 
